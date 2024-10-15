@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <button id="clickbutton">click me!</button>
+   <p id="clickMessage"></p>
+   <label for="nameinput">name</label>
+   <input type="text" id="nameinput" placeholder="enter your name">
+   <p id="focusmessage"></p>
+
+   <label for="colorselect">select a color:</label>
+   <select name="" id="colorselect">
+   <option value="">--choose--</option>
+   <option value="red">red</option>
+   <option value="green">green</option>
+   <option value="blue">blue</option>
+</select>
+<br>
+<label for="typing">type something</label>
+<input type="text" id="typing" placeholder="start typing">
+<script>document.getElementById("clickbutton").onclick=function()
+    {
+        document.getElementById("clickMessage").innerHTML="<p>click the button"
+    }
+</script>
+</body>
+</html>

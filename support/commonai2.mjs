@@ -1,0 +1,1 @@
+import { name, age } from "./commonai2.mjs";

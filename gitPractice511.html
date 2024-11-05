@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .user-container {
+            display: flex;
+            flex-wrap: wrap;
+           
+        }
+        .user {
+           
+            padding: 10px;
+            text-align:horizontal;
+            width: 150px;
+        }
+        .user img {
+            width: 100px;
+            height: 100px;
+            
+        }
+    </style>
+</head>
+<body>
+    <h1>Github Account</h1>
+  
+    <button onclick="getdata()">Click me</button>
+    <div id="result" class="user-container"></div>
+
+    <script>
+        function getdata() {
+            fetch("https://api.github.com/users")
+                .then((response) => response.json())
+                .then(response => {
+                    const resultContainer = document.getElementById("result");
+                    resultContainer.innerHTML = ''; 
+                    response.forEach((data) => {
+                        const parent = document.createElement("div");
+                        parent.classList.add("user");
+                        const name = document.createElement("p");
+                        const imag = document.createElement("img");
+
+                        imag.src = data.avatar_url; 
+                        name.innerHTML = data.login; 
+                        parent.appendChild(imag); 
+                        parent.appendChild(name); 
+                        resultContainer.appendChild(parent); 
+                    });
+                });
+        }
+    </script>
+</body>
+</html>

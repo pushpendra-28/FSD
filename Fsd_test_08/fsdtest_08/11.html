@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Currency Converter</title>
+    <style>
+        .login-box, .currency-converter {
+            width: 300px;
+            padding: 40px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            text-align: center;
+            
+            border-radius: 10px;
+            display: none;
+        }
+        .login-box input[type="text"], .login-box input[type="password"], .currency-converter input[type="text"], .currency-converter select {
+            border: none;
+            background: none;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: 10px 10px;
+            width: 200px;
+            outline: none;
+            color: #3498db;
+            border-radius: 24px;
+            transition: 0.25s;
+        }
+        .login-box input[type="text"]:focus, .login-box input[type="password"]:focus, .currency-converter input[type="text"]:focus, .currency-converter select:focus {
+            width: 280px;
+            border-color: #2ecc71;
+        }
+        .login-box input[type="submit"], .login-box input[type="reset"], .currency-converter button {
+            border: none;
+            background: none;
+            display: inline-block;
+            margin: 20px 10px;
+            text-align: center;
+            border: 2px solid #2ecc71;
+            padding: 10px 20px;
+            outline: none;
+            color: #2ecc71;
+            border-radius: 24px;
+            transition: 0.25s;
+            cursor: pointer;
+        }
+        .login-box input[type="submit"]:hover, .login-box input[type="reset"]:hover, .currency-converter button:hover {
+            background: #2ecc71;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-box" id="loginBox">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+</div>
+
+<div class="currency-converter" id="currencyConverter">
+    <h2>Currency Converter</h2>
+    <input type="text" id="amount" placeholder="Amount">
+    <select id="fromCurrency">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="INR">INR</option>
+    </select>
+    <select id="toCurrency">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="INR">INR</option>
+    </select>
+    <button onclick="convertCurrency()">Convert</button>
+    <p id="result"></p>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        if (username === 'admin' && password === 'password') { // Simple authentication check
+            alert('Login successful');
+            document.getElementById('loginBox').style.display = 'none';
+            document.getElementById('currencyConverter').style.display = 'block';
+        } else {
+            alert('Invalid credentials');
+        }
+    });
+
+    function convertCurrency() {
+        const amount = document.getElementById('amount').value;
+        const fromCurrency = document.getElementById('fromCurrency').value;
+        const toCurrency = document.getElementById('toCurrency').value;
+        const apiKey = 'https://api.exchangerate-api.com/v4/latest/USD';
+        const url = `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const rate = data.rates[toCurrency];
+                const result = amount * rate;
+                document.getElementById('result').innerText = `Converted Amount: ${result.toFixed(2)} ${toCurrency}`;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+  
+    document.getElementById('loginBox').style.display = 'block';
+</script>
+
+</body>
+</html>
